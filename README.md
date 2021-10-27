@@ -1,4 +1,5 @@
 # docker-chromium
+
 This is a Google Chromium container for IoT
 
 ## Build
@@ -11,15 +12,5 @@ make image
 
 ### Run :
 ```
-docker run --privileged -e DISPLAY=unix:0 -v /run/user/1000:/run/user/0  quay.io/mangirdas/chromium --app https://synpse.net
-```
-
-
-### Debug:
-
-
-
-Reset builder (https://github.com/docker/buildx/issues/495):
-```
-docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+docker run -v /dev/tty0:/dev/tty0 --name rpi-kiosk -e URL=http://synpse.net --privileged --rm quay.io/mangirdas/chromium
 ```

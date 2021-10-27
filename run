@@ -1,0 +1,11 @@
+#!/bin/bash
+# set -euo pipefail
+set -x
+URL=${URL:-http://synpse.net}
+
+#Xorg &
+#X_PID=$!
+
+echo $URL > /root/url
+while ! curl -sf -o /dev/null "$URL"; do sleep 1; done
+xinit

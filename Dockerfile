@@ -1,26 +1,43 @@
-FROM ubuntu
+FROM raspbian/stretch
 
-# Install dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-  fontconfig fontconfig-config fonts-dejavu-core gconf-service gconf-service-backend gconf2-common \
-  libasn1-8-heimdal libasound2 libasound2-data libatk1.0-0 libatk1.0-data libavahi-client3 libavahi-common-data \
-  libavahi-common3 libcairo2 libcups2 libdatrie1 libdbus-1-3 libdbus-glib-1-2 libexpat1 libfontconfig1 \
-  libfreetype6 libgconf-2-4 libgdk-pixbuf2.0-0 libgdk-pixbuf2.0-common libgmp10 \
-  libgraphite2-3 libgssapi-krb5-2 libgssapi3-heimdal libgtk2.0-0 \
-  libgtk2.0-common libharfbuzz0b libhcrypto4-heimdal libheimbase1-heimdal libheimntlm0-heimdal  \
-  libhx509-5-heimdal libjbig0 libjpeg-turbo8 libjpeg8 libk5crypto3 libkeyutils1 \
-  libkrb5-26-heimdal libkrb5-3 libkrb5support0 libldap-2.4-2 libnspr4 libnss3 \
-  libp11-kit0 libpango-1.0-0 libpangocairo-1.0-0 libpangoft2-1.0-0 libpixman-1-0 libroken18-heimdal \
-  libsasl2-2 libsasl2-modules-db libsqlite3-0 libtasn1-6 libthai-data libthai0 libtiff5 libwind0-heimdal libx11-6 \
-  libx11-data libxau6 libxcb-render0 libxcb-shm0 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxdmcp6 \
-  libxext6 libxfixes3 libxi6 libxinerama1 libxml2 libxrandr2 libxrender1 libxss1 libxtst6 shared-mime-info ucf \
-  x11-common xdg-utils
+ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get install chromium-browser -y
+RUN apt-get update
 
-# Add settings
-ADD chromium-settings /etc/chromium-browser/default
+RUN apt-get install -y chromium-browser
+#RUN apt-get install -y dropbear
+RUN apt-get install -y xserver-xorg-core
+RUN apt-get install -y xserver-xorg-video-fbdev
+RUN apt-get install -y x11-xserver-utils
+RUN apt-get install -y libgl1-mesa-dri
+##RUN apt-get install -y xserver-xorg-video-vesa  xorg-video-abi-18
+RUN apt-get install -y matchbox-window-manager
+RUN apt-get install -y xautomation
+RUN apt-get install -y feh
+RUN apt-get install -y xauth
+RUN apt-get install -y libraspberrypi0 libraspberrypi-dev libraspberrypi-doc libraspberrypi-bin
+RUN apt-get install -y xinit
 
-ENTRYPOINT [ "/usr/bin/chromium-browser" ]
+#RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-CMD [ "" ]
+#RUN apt-get update && apt-get install -y \
+#  iceweasel dropbear xserver-xorg-core xserver-xorg-video-fbdev x11-xserver-utils \
+#  libgl1-mesa-dri xserver-xorg-video-modesetting xserver-xorg-video-vesa \
+#  matchbox-window-manager openvpn xautomation feh \
+#  && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+ADD run /bin/run
+ADD wallpaper.png /etc/wallpaper.png
+#ADD dot-mozilla /root/.mozilla
+#RUN chmod +x /bin/run
+#VOLUME /dev/tty0
+
+RUN adduser --system --uid 5000 --disabled-password --shell /bin/bash  -q chromium
+RUN addgroup chromium tty
+
+ADD start-chromium /root/start-chromium
+
+#USER chromium
+
+ENV XINITRC=/root/start-chromium
+ENTRYPOINT [ "/bin/run" ]
