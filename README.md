@@ -1,6 +1,6 @@
 # docker-chromium
 
-This is a Google Chromium container for IoT
+This is a Google Chromium container for IoT Kiosk devices
 
 ## Build
 
