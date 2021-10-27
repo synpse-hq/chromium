@@ -5,8 +5,8 @@ This is a Google Chromium container for IoT
 ## Build
 
 ```
-git clone https://github.com/mjudeikis/docker-chromium
-cd docker-chromium
+git clone https://github.com/mjudeikis/chromium
+cd chromium
 make image
 ```
 
