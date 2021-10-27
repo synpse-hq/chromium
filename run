@@ -6,6 +6,4 @@ URL=${URL:-http://synpse.net}
 echo $URL > /root/url
 while ! curl -sf -o /dev/null "$URL"; do sleep 1; done
 
-unclutter -idle 1 >>  dev/null
-
 xinit
