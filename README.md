@@ -12,5 +12,5 @@ make image
 
 ### Run :
 ```
-docker run -v /dev/tty0:/dev/tty0 --name rpi-kiosk -e URL=http://synpse.net --privileged --rm quay.io/synpse-hq/chromium
+docker run -v /dev/tty0:/dev/tty0 --name rpi-kiosk -e URL=http://synpse.net --privileged --rm quay.io/synpse/chromium
 ```
