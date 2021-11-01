@@ -1,4 +1,4 @@
-APP_REPO ?= quay.io/mangirdas/chromium
+APP_REPO ?= quay.io/synpse-hq/chromium
 
 .PHONY: image
 image:
